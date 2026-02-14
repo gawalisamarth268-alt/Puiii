@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        color: white;
+    }
+
+    h1 {
+        font-size: 2.7rem;
+        animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+        from { text-shadow: 0 0 10px white; }
+        to { text-shadow: 0 0 25px #fff, 0 0 40px #ffdde1; }
+    }
+
+    .btn-container {
+        margin-top: 40px;
+        position: relative;
+        width: 320px;
+        height: 220px;
+    }
+
+    button {
+        padding: 14px 28px;
+        font-size: 18px;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        position: absolute;
+        transition: 0.2s;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    #yesBtn {
+        background-color: #ff2e63;
+        color: white;
+        left: 50px;
+    }
+
+    #yesBtn:hover {
+        transform: scale(1.1);
+    }
+
+    #noBtn {
+        background-color: white;
+        color: #ff2e63;
+        left: 180px;
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 20px;
+        animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-10px); opacity: 1; }
+        100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .love-message {
+        font-size: 2.2rem;
+        margin-top: 25px;
+        animation: fadeIn 1.5s ease-in-out forwards;
+        opacity: 0;
+    }
+
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<h1>Purvai, will you be my Valentine? 💖</h1>
+
+<div class="btn-container">
+    <button id="yesBtn">Yes 💘</button>
+    <button id="noBtn">No 😢</button>
+</div>
+
+<div id="message"></div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const messageDiv = document.getElementById("message");
+    const bgMusic = document.getElementById("bgMusic");
+
+    const popSound = new Audio("https://www.soundjay.com/button/sounds/button-16.mp3");
+
+    // Start music on first click anywhere (browser autoplay policy fix)
+    document.body.addEventListener("click", () => {
+        bgMusic.play();
+    }, { once: true });
+
+    noBtn.addEventListener("mouseover", () => {
+        const container = document.querySelector(".btn-container");
+        const maxX = container.clientWidth - noBtn.offsetWidth;
+        const maxY = container.clientHeight - noBtn.offsetHeight;
+
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+
+        popSound.play();
+    });
+
+    yesBtn.addEventListener("click", () => {
+        startHeartRain();
+        messageDiv.innerHTML = "<div class='love-message'>Love you too, Pui 💖</div>";
+    });
+
+    function startHeartRain() {
+        for (let i = 0; i < 80; i++) {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "💖";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (Math.random() * 25 + 15) + "px";
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+    }
+</script>
+
+</body>
+</html>
